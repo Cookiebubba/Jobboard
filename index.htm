@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Jobs & Office Tasks (Working Create Buttons)</title>
+  <title>Jobs & Office Tasks (Thin Lines + Pronounced Glow)</title>
 
   <!-- Example Google Font -->
   <link rel="preconnect" href="https://fonts.gstatic.com" />
@@ -35,16 +35,17 @@
       align-items: center;
       padding: 20px;
       background: #000;
-      border-bottom: 2px solid #fff; /* pure white line */
-      box-shadow: 0 0 8px rgba(255,255,255,0.1);
+      /* Thin 1px line, more pronounced glow on the header if we want */
+      border-bottom: 1px solid #fff; 
+      box-shadow: 0 0 12px rgba(255,255,255,0.2);
       margin-bottom: 20px;
     }
 
-    /* Folder icon only, no text */
+    /* Folder icon button, now with 1px border + bigger glow on hover */
     .folder-btn {
       padding: 8px 14px;
       background: transparent;
-      border: 2px solid #fff; /* pure white line */
+      border: 1px solid #fff; /* thin line */
       border-radius: 25px;
       cursor: pointer;
       transition: box-shadow 0.3s, transform 0.3s;
@@ -54,14 +55,13 @@
       justify-content: center;
     }
     .folder-btn:hover {
-      box-shadow: 0 0 8px #fff;
+      box-shadow: 0 0 12px #fff; /* more pronounced glow */
       transform: translateY(-2px);
     }
     .folder-icon {
       width: 28px;
       height: 24px;
-      display: inline-block;
-      background: url('data:image/svg+xml;charset=utf-8,<svg fill="%23fff" width="32" height="28" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 4l2 2h8c1.10457 0 2 .89543 2 2v10c0 1.10457-.89543 2-2 2H4c-1.10457 0-2-.89543 2-2V6c0-1.10457.89543-2 2-2h6z"/></svg>') no-repeat center center;
+      background: url('data:image/svg+xml;charset=utf-8,<svg fill="%23fff" width="32" height="28" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 4l2 2h8c1.10457 0 2 .89543 2 2v10c0 1.10457-.89543 2-2 2H4c-1.10457 0-2-.89543-2-2V6c0-1.10457.89543-2 2-2h6z"/></svg>') no-repeat center center;
       background-size: contain;
     }
 
@@ -76,27 +76,28 @@
       gap: 10px;
       margin-left: auto;
     }
+
     .header-btn {
       padding: 8px 14px;
       font-size: 0.9em;
       font-weight: 500;
       color: #fff;
       background: transparent;
-      border: 2px solid #fff;
+      border: 1px solid #fff; /* thin line */
       border-radius: 25px;
       cursor: pointer;
       transition: box-shadow 0.3s, transform 0.3s;
     }
     .header-btn:hover {
-      box-shadow: 0 0 8px #fff;
+      box-shadow: 0 0 12px #fff; /* bigger glow */
       transform: translateY(-2px);
     }
 
     /* Click bounce animation */
     @keyframes clickBounce {
-      0% { transform: scale(1); box-shadow: 0 0 8px #fff; }
+      0% { transform: scale(1); box-shadow: 0 0 12px #fff; }
       50% { transform: scale(1.08); box-shadow: 0 0 16px #fff; }
-      100% { transform: scale(1); box-shadow: 0 0 8px #0000; }
+      100% { transform: scale(1); box-shadow: none; }
     }
     .btn-click-bounce {
       animation: clickBounce 0.4s ease;
@@ -140,18 +141,19 @@
       gap: 10px;
       justify-content: space-around;
     }
+
     .column {
       flex: 1;
       min-width: 150px;
       background: #000;
-      border: 2px solid #fff; /* pure white line */
+      border: 1px solid #fff; /* thin line */
       border-radius: 8px;
       padding: 10px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      box-shadow: 0 0 6px rgba(255,255,255,0.1);
       transition: background 0.3s, box-shadow 0.3s;
+      box-shadow: 0 0 8px rgba(255,255,255,0.1);
     }
     .column h3 {
       margin-bottom: 10px;
@@ -160,7 +162,7 @@
       text-align: center;
     }
     .column.drag-over {
-      box-shadow: 0 0 12px #fff;
+      box-shadow: 0 0 12px #fff; /* bigger glow on drag */
     }
 
     /****************************************************************
@@ -182,72 +184,72 @@
     }
 
     @keyframes bounceGlow {
-      0% { transform: scale(1); }
-      30% { transform: scale(1.07); }
-      50% { transform: scale(0.97); }
-      70% { transform: scale(1.03); }
+      0%   { transform: scale(1); }
+      30%  { transform: scale(1.07); }
+      50%  { transform: scale(0.97); }
+      70%  { transform: scale(1.03); }
       100% { transform: scale(1); }
     }
     .bounce-glow {
       animation: bounceGlow 0.5s ease-out;
     }
 
-    /* Status color-coded classes for the main board */
+    /* Status color-coded classes for the main board items */
     .submitted {
       background: linear-gradient(45deg, #2980b9, #3498db);
       box-shadow: 0 0 6px #3498db;
     }
     .submitted:hover {
-      box-shadow: 0 0 10px #3498db;
+      box-shadow: 0 0 12px #3498db; /* bigger glow on hover */
     }
     .accepted {
       background: linear-gradient(45deg, #16a085, #1abc9c);
       box-shadow: 0 0 6px #1abc9c;
     }
     .accepted:hover {
-      box-shadow: 0 0 10px #1abc9c;
+      box-shadow: 0 0 12px #1abc9c;
     }
     .scheduled {
       background: linear-gradient(45deg, #f39c12, #e67e22);
       box-shadow: 0 0 6px #e67e22;
     }
     .scheduled:hover {
-      box-shadow: 0 0 10px #e67e22;
+      box-shadow: 0 0 12px #e67e22;
     }
     .complete {
       background: linear-gradient(45deg, #27ae60, #2ecc71);
       box-shadow: 0 0 6px #2ecc71;
     }
     .complete:hover {
-      box-shadow: 0 0 10px #2ecc71;
+      box-shadow: 0 0 12px #2ecc71;
     }
     .not-started {
       background: linear-gradient(45deg, #c0392b, #e74c3c);
       box-shadow: 0 0 6px #e74c3c;
     }
     .not-started:hover {
-      box-shadow: 0 0 10px #e74c3c;
+      box-shadow: 0 0 12px #e74c3c;
     }
     .in-progress {
       background: linear-gradient(45deg, #9b59b6, #8e44ad);
       box-shadow: 0 0 6px #8e44ad;
     }
     .in-progress:hover {
-      box-shadow: 0 0 10px #8e44ad;
+      box-shadow: 0 0 12px #8e44ad;
     }
     .pending {
       background: linear-gradient(45deg, #f1c40f, #f39c12);
       box-shadow: 0 0 6px #f39c12;
     }
     .pending:hover {
-      box-shadow: 0 0 10px #f39c12;
+      box-shadow: 0 0 12px #f39c12;
     }
     .finished {
       background: linear-gradient(45deg, #2ecc71, #27ae60);
       box-shadow: 0 0 6px #27ae60;
     }
     .finished:hover {
-      box-shadow: 0 0 10px #27ae60;
+      box-shadow: 0 0 12px #27ae60;
     }
 
     .edit-btn {
@@ -286,7 +288,7 @@
     }
     .modal-content {
       background: #000;
-      border: 2px solid #fff;
+      border: 1px solid #fff; /* thin line */
       box-shadow: 0 0 12px rgba(255,255,255,0.2);
       border-radius: 10px;
       padding: 20px;
@@ -319,6 +321,7 @@
     .close-modal:hover {
       opacity: 1;
     }
+
     .form-row {
       margin: 10px 0;
       display: flex;
@@ -331,7 +334,7 @@
     .form-row input, .form-row select, .form-row textarea {
       padding: 6px;
       border-radius: 5px;
-      border: 2px solid #fff;
+      border: 1px solid #fff; /* thin line */
       background: #111;
       color: #fff;
       font-size: 1em;
@@ -341,29 +344,29 @@
       margin-top: 10px;
       padding: 8px 12px;
       background: #111;
-      border: 2px solid #fff;
+      border: 1px solid #fff; /* thin line */
       border-radius: 5px;
       cursor: pointer;
       font-weight: 500;
-      color: #fff;
       transition: box-shadow 0.2s;
+      color: #fff;
     }
     .modal-btn:hover {
-      box-shadow: 0 0 6px #fff;
+      box-shadow: 0 0 12px #fff; /* bigger glow */
     }
     .archive-btn {
       background: linear-gradient(45deg, #e74c3c, #c0392b);
-      border-color: #fff;
+      border: 1px solid #fff;
       margin-top: 15px;
       border-radius: 25px;
       width: 100%;
     }
     .archive-btn:hover {
-      box-shadow: 0 0 10px #e74c3c;
+      box-shadow: 0 0 12px #e74c3c;
     }
 
     /****************************************************************
-     * 5) Folder Modal
+     * 5) Folder Modal (Active/Archived, List/Grid)
      ****************************************************************/
     #folderModal .modal-content {
       max-width: 720px;
@@ -372,7 +375,7 @@
     }
     .folder-sidebar {
       width: 100px;
-      border-right: 2px solid #fff;
+      border-right: 1px solid #fff; /* thin line */
       padding-right: 10px;
       display: flex;
       flex-direction: column;
@@ -385,14 +388,14 @@
       gap: 5px;
       cursor: pointer;
       background: transparent;
-      border: 2px solid #fff;
+      border: 1px solid #fff; /* thin line */
       border-radius: 20px;
       padding: 6px 8px;
       transition: box-shadow 0.2s, transform 0.2s;
       font-size: 0.9em;
     }
     .folder-choice:hover {
-      box-shadow: 0 0 6px #fff;
+      box-shadow: 0 0 12px #fff;
       transform: scale(1.03);
     }
     .mini-folder-icon {
@@ -401,14 +404,12 @@
       background: url('data:image/svg+xml;charset=utf-8,<svg fill="%23fff" width="24" height="20" viewBox="0 0 24 24"><path d="M10 4l2 2h8c1.10457 0 2 .89543 2 2v10c0 1.10457-.89543 2-2 2H4c-1.10457 0-2-.89543 2-2V6c0-1.10457.89543-2 2-2h6z"/></svg>') no-repeat center center;
       background-size: contain;
     }
-
     .folder-body {
       flex: 1;
       padding-left: 10px;
       display: flex;
       flex-direction: column;
     }
-
     .folder-view-buttons {
       align-self: flex-end;
       margin-bottom: 10px;
@@ -419,24 +420,22 @@
       width: 32px;
       height: 32px;
       background: none;
-      border: 2px solid #fff;
+      border: 1px solid #fff; /* thin line */
       border-radius: 8px;
       cursor: pointer;
-      transition: box-shadow 0.2s, transform 0.2s;
       display: flex; 
       align-items: center; 
       justify-content: center;
+      transition: box-shadow 0.2s, transform 0.2s;
     }
     .view-btn:hover {
-      box-shadow: 0 0 8px #fff;
+      box-shadow: 0 0 12px #fff;
       transform: scale(1.05);
     }
-
-    /* Different icons for list / grid (Material Icons, base64) */
     .list-icon {
       width: 20px;
       height: 20px;
-      background: url("data:image/svg+xml;charset=utf-8;base64,PHN2ZyBmaWxsPSIjZmZmIiB2aWV3Qm94PSIwIDAgMjQgMjQiIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnL3N2ZyI+PHRpdGxlPnZpZXdfbGlzdDwvdGl0bGU+PHBhdGggZD0iTTUgMTdjMCAxLjEwOS45IDIgMiAyaDEwYzEuMTA5IDAgMi0uOSAyLTJzLS45LTItMi0ySDVjLTEuMSAwLTIgLjktMiAyeiBNNSA1YzAgMS4xMDkuOSAyIDIgMmgxMGMxLjEwOSAwIDItLjkgMi0ycy0uOS0yLTItMkg1Yy0xLjEgMC0yIC45LTIgMnogTTEgMTFoMjBWM2gtMjB2OG0wIDEyaDIwdjhoLTIwdi04Ii8+PC9zdmc+") no-repeat center center;
+      background: url("data:image/svg+xml;charset=utf-8;base64,PHN2ZyBmaWxsPSIjZmZmIiB2aWV3Qm94PSIwIDAgMjQgMjQiIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnL3N2ZyI+PHRpdGxlPnZpZXdfbGlzdDwvdGl0bGU+PHBhdGggZD0iTTUgMTNjMCAxLjEwOS45IDIgMiAyaDEwYzEuMTA5IDAgMi0uOSAyLTJzLS45LTItMi0ySDVjLTEuMSAwLTIgLjktMiAyeiBNNSA1YzAgMS4xMDkuOSAyIDIgMmgxMGMxLjEwOSAwIDItLjkgMi0ycy0uOS0yLTItMkg1Yy0xLjEgMC0yIC45LTIgMnogTTEgMTFoMjBWN2gtMjB2OG0wIDEyaDIwdjhIL3YtOHoiLz48L3N2Zz4=") no-repeat center center;
       background-size: contain;
     }
     .grid-icon {
@@ -459,8 +458,6 @@
       width: 220px; 
     }
 
-    /* For the folder items, let's do small squares for status, no entire-row color. 
-       Also do alternating shading for row separation. */
     .folder-item {
       position: relative;
       border-radius: 25px;
@@ -468,11 +465,11 @@
       margin: 5px 0;
       font-size: 0.9em;
       color: #fff;
-      border: 2px solid #fff;
+      border: 1px solid #fff; /* thin line */
       cursor: default;
       transition: box-shadow 0.3s, transform 0.3s;
     }
-    /* Alternating row shading */
+    /* Alternate row shading */
     .folder-item:nth-child(even) {
       background: rgba(255,255,255,0.05);
     }
@@ -481,6 +478,7 @@
     }
     .folder-item:hover {
       transform: translateY(-2px);
+      box-shadow: 0 0 12px rgba(255,255,255,0.3);
     }
     .folder-item .restore-btn {
       position: absolute;
@@ -497,7 +495,7 @@
       opacity: 1;
     }
 
-    /* Small color-coded squares to represent status */
+    /* small color-coded squares for status */
     .status-square {
       width: 14px;
       height: 14px;
@@ -514,7 +512,6 @@
     .status-square.pending { background: #f39c12; }
     .status-square.finished { background: #27ae60; }
 
-    /* header row in list mode */
     .list-header-row {
       display: flex;
       font-weight: 600;
@@ -530,7 +527,7 @@
       top: 25px;
       left: 0;
       background: #111;
-      border: 2px solid #fff;
+      border: 1px solid #fff;
       padding: 5px;
       border-radius: 5px;
       display: none;
@@ -663,7 +660,7 @@
     </div>
   </div>
 
-  <!-- Edit Modal (for both Jobs & Office) -->
+  <!-- Edit Modal -->
   <div id="editModal" class="modal">
     <div class="modal-content">
       <div class="modal-header">
@@ -675,7 +672,7 @@
     </div>
   </div>
 
-  <!-- Folder Modal: Show Active/Archived, List/Grid. -->
+  <!-- Folder Modal -->
   <div id="folderModal" class="modal">
     <div class="modal-content">
       <div class="folder-sidebar">
@@ -703,9 +700,6 @@
   </div>
 
   <script>
-    /************************************************************
-     *  Data Structures
-     ************************************************************/
     let jobs = [];
     let officeTasks = [];
     let jobIdCounter = 1;
@@ -717,9 +711,6 @@
     let currentEditBoard = null;
     let currentEditId = null;
 
-    /************************************************************
-     *  Local Storage
-     ************************************************************/
     function saveToLocalStorage() {
       localStorage.setItem("myJobs", JSON.stringify(jobs));
       localStorage.setItem("myOfficeTasks", JSON.stringify(officeTasks));
@@ -738,9 +729,6 @@
       if (storedOCounter) officeTaskIdCounter = parseInt(storedOCounter, 10);
     }
 
-    /************************************************************
-     *  Time Tracking in Each Status
-     ************************************************************/
     function startNewTransition(item, newStatus) {
       const now = Date.now();
       if (!item.transitions) item.transitions = [];
@@ -768,9 +756,6 @@
       return result;
     }
 
-    /************************************************************
-     *  Render Boards
-     ************************************************************/
     function renderJobs() {
       document.getElementById("jobs-submitted-col").innerHTML = "<h3>Submitted</h3>";
       document.getElementById("jobs-accepted-col").innerHTML = "<h3>Accepted</h3>";
@@ -778,7 +763,7 @@
       document.getElementById("jobs-complete-col").innerHTML = "<h3>Complete</h3>";
 
       jobs.forEach(job => {
-        if (job.archived) return; // skip archived
+        if (job.archived) return;
         const itemDiv = document.createElement("div");
         itemDiv.classList.add("item", job.status.toLowerCase().replace(" ", "-"));
         itemDiv.setAttribute("draggable", "true");
@@ -854,10 +839,7 @@
       });
     }
 
-    /************************************************************
-     *  Add New Job / Office Task
-     ************************************************************/
-    // Show job modal
+    // Add New Job
     const openJobModalBtn = document.getElementById("openJobModalBtn");
     const jobModal = document.getElementById("jobModal");
     const closeJobModalBtn = document.getElementById("closeJobModalBtn");
@@ -872,7 +854,6 @@
     window.addEventListener("click", (e) => {
       if (e.target === jobModal) closeJobModal();
     });
-
     function closeJobModal() {
       jobModal.style.display = "none";
       document.getElementById("jobContract").value = "";
@@ -881,7 +862,6 @@
       document.getElementById("jobStatus").value = "Submitted";
       document.getElementById("jobComment").value = "";
     }
-
     addJobBtn.addEventListener("click", () => {
       addJobBtn.classList.add("btn-click-bounce");
       setTimeout(() => addJobBtn.classList.remove("btn-click-bounce"), 400);
@@ -896,7 +876,6 @@
         alert("Please enter a Contract Name.");
         return;
       }
-
       const now = Date.now();
       const newJob = {
         id: jobIdCounter++,
@@ -918,7 +897,7 @@
       closeJobModal();
     });
 
-    // Show office task modal
+    // Add New Office Task
     const openOfficeModalBtn = document.getElementById("openOfficeModalBtn");
     const officeModal = document.getElementById("officeModal");
     const closeOfficeModalBtn = document.getElementById("closeOfficeModalBtn");
@@ -933,7 +912,6 @@
     window.addEventListener("click", (e) => {
       if (e.target === officeModal) closeOfficeModal();
     });
-
     function closeOfficeModal() {
       officeModal.style.display = "none";
       document.getElementById("taskTitle").value = "";
@@ -941,7 +919,6 @@
       document.getElementById("taskStatus").value = "Not Started";
       document.getElementById("taskComment").value = "";
     }
-
     addOfficeTaskBtn.addEventListener("click", () => {
       addOfficeTaskBtn.classList.add("btn-click-bounce");
       setTimeout(() => addOfficeTaskBtn.classList.remove("btn-click-bounce"), 400);
@@ -955,7 +932,6 @@
         alert("Please enter a Task Title.");
         return;
       }
-
       const now = Date.now();
       const newTask = {
         id: officeTaskIdCounter++,
@@ -976,9 +952,7 @@
       closeOfficeModal();
     });
 
-    /************************************************************
-     *  Edit & Archive
-     ************************************************************/
+    // Edit & Archive
     const editModal = document.getElementById("editModal");
     const closeEditModalBtn = document.getElementById("closeEditModalBtn");
     const editFormContainer = document.getElementById("editFormContainer");
@@ -1081,7 +1055,6 @@
       }
     });
 
-    // Archive
     archiveBtn.addEventListener("click", () => {
       if (!currentEditBoard || !currentEditId) return;
       let item = null;
@@ -1099,7 +1072,7 @@
       renderOfficeTasks();
     });
 
-    // Insert "Save Changes" button if missing
+    // Insert "Save Changes" dynamically
     const observer = new MutationObserver(() => {
       if (!document.getElementById("saveEditBtn")) {
         const saveBtn = document.createElement("button");
@@ -1147,7 +1120,7 @@
     observer.observe(editFormContainer, { childList: true, subtree: true });
 
     /************************************************************
-     *  Drag & Drop
+     * Drag & Drop
      ************************************************************/
     let draggedItem = null;
     function onDragStart(e) {
@@ -1187,7 +1160,6 @@
 
       const newStatus = col.getAttribute("data-status");
       const boardType = draggedItem.dataset.board;
-
       if (boardType === "jobs") {
         const jobId = parseInt(draggedItem.dataset.jobId, 10);
         const job = jobs.find(j => j.id === jobId);
@@ -1211,7 +1183,7 @@
     }
 
     /************************************************************
-     *  CSV Export
+     * CSV Export
      ************************************************************/
     document.getElementById("downloadCsvBtn").addEventListener("click", () => {
       const rows = [];
@@ -1267,7 +1239,7 @@
     });
 
     /************************************************************
-     *  FOLDER MODAL: Active/Archived, List/Grid
+     * Folder Modal: Active/Archived, List/Grid
      ************************************************************/
     const folderBtn = document.getElementById("folderBtn");
     const folderModal = document.getElementById("folderModal");
@@ -1317,7 +1289,7 @@
       }
       folderContent.innerHTML = "";
 
-      // In "list" mode, show a header row
+      // If in list mode, add a header row
       if (folderViewMode === "list") {
         const headerRow = document.createElement("div");
         headerRow.classList.add("list-header-row");
@@ -1367,7 +1339,7 @@
         const row = document.createElement("div");
         row.classList.add("folder-item");
 
-        // small colored square for status
+        // small color-coded square
         const statusClass = it.status.toLowerCase().replace(" ", "-");
         const squareHtml = `<div class="status-square ${statusClass}"></div>`;
 
@@ -1418,7 +1390,7 @@
       });
     }
 
-    // Minimal "filter popup" logic
+    // Minimal filter popup logic
     let filterPopup = null;
     function toggleFilterPopup(colName, x, y) {
       if (filterPopup && filterPopup.style.display !== "none") {
@@ -1445,10 +1417,9 @@
     });
 
     /************************************************************
-     *  INIT
+     * INIT
      ************************************************************/
     window.onload = function() {
-      // Set up columns for drag & drop
       const allColumns = document.querySelectorAll(".column");
       allColumns.forEach((col) => {
         col.addEventListener("dragover", onDragOver);
@@ -1456,10 +1427,9 @@
         col.addEventListener("drop", onDrop);
       });
 
-      // Load from localStorage
       loadFromLocalStorage();
 
-      // If no data, sample items
+      // If no data, sample
       if (jobs.length===0 && officeTasks.length===0) {
         const now = Date.now();
         const sampleJob = {
@@ -1523,7 +1493,6 @@
         saveToLocalStorage();
       }
 
-      // Render boards
       renderJobs();
       renderOfficeTasks();
     };
