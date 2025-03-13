@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Jobs & Office Tasks (Alternate Icons & Status Squares)</title>
+  <title>Jobs & Office Tasks (Working Create Buttons)</title>
 
-  <!-- Google Font -->
+  <!-- Example Google Font -->
   <link rel="preconnect" href="https://fonts.gstatic.com" />
   <link 
     href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" 
@@ -40,11 +40,11 @@
       margin-bottom: 20px;
     }
 
-    /* Folder icon only – no text */
+    /* Folder icon only, no text */
     .folder-btn {
       padding: 8px 14px;
       background: transparent;
-      border: 2px solid #fff;
+      border: 2px solid #fff; /* pure white line */
       border-radius: 25px;
       cursor: pointer;
       transition: box-shadow 0.3s, transform 0.3s;
@@ -58,10 +58,10 @@
       transform: translateY(-2px);
     }
     .folder-icon {
-      /* Bigger folder icon */
       width: 28px;
       height: 24px;
-      background: url('data:image/svg+xml;charset=utf-8,<svg fill="%23fff" width="32" height="28" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 4l2 2h8c1.10457 0 2 .89543 2 2v10c0 1.10457-.89543 2-2 2H4c-1.10457 0-2-.89543-2-2V6c0-1.10457.89543-2 2-2h6z"/></svg>') no-repeat center center;
+      display: inline-block;
+      background: url('data:image/svg+xml;charset=utf-8,<svg fill="%23fff" width="32" height="28" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 4l2 2h8c1.10457 0 2 .89543 2 2v10c0 1.10457-.89543 2-2 2H4c-1.10457 0-2-.89543 2-2V6c0-1.10457.89543-2 2-2h6z"/></svg>') no-repeat center center;
       background-size: contain;
     }
 
@@ -94,8 +94,8 @@
 
     /* Click bounce animation */
     @keyframes clickBounce {
-      0%   { transform: scale(1); box-shadow: 0 0 8px #fff; }
-      50%  { transform: scale(1.08); box-shadow: 0 0 16px #fff; }
+      0% { transform: scale(1); box-shadow: 0 0 8px #fff; }
+      50% { transform: scale(1.08); box-shadow: 0 0 16px #fff; }
       100% { transform: scale(1); box-shadow: 0 0 8px #0000; }
     }
     .btn-click-bounce {
@@ -112,12 +112,14 @@
       flex-direction: column;
       gap: 30px;
     }
+
     .boards {
       display: flex;
       flex-wrap: wrap;
       gap: 40px;
       justify-content: space-around;
     }
+
     .board {
       display: flex;
       flex-direction: column;
@@ -132,6 +134,7 @@
       text-align: center;
       text-transform: uppercase;
     }
+
     .columns {
       display: flex;
       gap: 10px;
@@ -141,14 +144,14 @@
       flex: 1;
       min-width: 150px;
       background: #000;
-      border: 2px solid #fff;
+      border: 2px solid #fff; /* pure white line */
       border-radius: 8px;
       padding: 10px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      transition: background 0.3s, box-shadow 0.3s;
       box-shadow: 0 0 6px rgba(255,255,255,0.1);
+      transition: background 0.3s, box-shadow 0.3s;
     }
     .column h3 {
       margin-bottom: 10px;
@@ -178,23 +181,18 @@
       transition: box-shadow 0.3s, transform 0.3s;
     }
 
-    /* Bounce glow on drag-drop */
     @keyframes bounceGlow {
-      0%   { transform: scale(1); }
-      30%  { transform: scale(1.07); }
-      50%  { transform: scale(0.97); }
-      70%  { transform: scale(1.03); }
+      0% { transform: scale(1); }
+      30% { transform: scale(1.07); }
+      50% { transform: scale(0.97); }
+      70% { transform: scale(1.03); }
       100% { transform: scale(1); }
     }
     .bounce-glow {
       animation: bounceGlow 0.5s ease-out;
     }
 
-    /* On the main board, tasks keep color-coded backgrounds if you want. 
-       (We could remove them entirely. 
-       For the folder "list" or "grid" we do small squares. 
-       So these .submitted, .accepted etc. are still used for board tasks. 
-    */
+    /* Status color-coded classes for the main board */
     .submitted {
       background: linear-gradient(45deg, #2980b9, #3498db);
       box-shadow: 0 0 6px #3498db;
@@ -347,13 +345,12 @@
       border-radius: 5px;
       cursor: pointer;
       font-weight: 500;
-      transition: box-shadow 0.2s;
       color: #fff;
+      transition: box-shadow 0.2s;
     }
     .modal-btn:hover {
       box-shadow: 0 0 6px #fff;
     }
-    /* Archive button (red) in the edit modal */
     .archive-btn {
       background: linear-gradient(45deg, #e74c3c, #c0392b);
       border-color: #fff;
@@ -366,7 +363,7 @@
     }
 
     /****************************************************************
-     * 5) Folder Modal (Active/Archived) with list/grid
+     * 5) Folder Modal
      ****************************************************************/
     #folderModal .modal-content {
       max-width: 720px;
@@ -401,7 +398,7 @@
     .mini-folder-icon {
       width: 18px; 
       height: 15px;
-      background: url('data:image/svg+xml;charset=utf-8,<svg fill="%23fff" width="24" height="20" viewBox="0 0 24 24"><path d="M10 4l2 2h8c1.10457 0 2 .89543 2 2v10c0 1.10457-.89543 2-2 2H4c-1.10457 0-2-.89543-2-2V6c0-1.10457.89543-2 2-2h6z"/></svg>') no-repeat center center;
+      background: url('data:image/svg+xml;charset=utf-8,<svg fill="%23fff" width="24" height="20" viewBox="0 0 24 24"><path d="M10 4l2 2h8c1.10457 0 2 .89543 2 2v10c0 1.10457-.89543 2-2 2H4c-1.10457 0-2-.89543 2-2V6c0-1.10457.89543-2 2-2h6z"/></svg>') no-repeat center center;
       background-size: contain;
     }
 
@@ -411,6 +408,7 @@
       display: flex;
       flex-direction: column;
     }
+
     .folder-view-buttons {
       align-self: flex-end;
       margin-bottom: 10px;
@@ -434,17 +432,17 @@
       transform: scale(1.05);
     }
 
-    /* Different icons for list / grid */
+    /* Different icons for list / grid (Material Icons, base64) */
     .list-icon {
       width: 20px;
       height: 20px;
-      background: url("data:image/svg+xml;charset=utf-8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9IiNmZmYiIGhlaWdodD0iMjQiIHdpZHRoPSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMyAxM2gxNHYtMkgzdjJ6bTAgNmgxNHYtMkgzdjJ6bTAtMTBoMTRWN2gtM3YtMkgzIHYyeiIvPjwvc3ZnPg==") no-repeat center center;
+      background: url("data:image/svg+xml;charset=utf-8;base64,PHN2ZyBmaWxsPSIjZmZmIiB2aWV3Qm94PSIwIDAgMjQgMjQiIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnL3N2ZyI+PHRpdGxlPnZpZXdfbGlzdDwvdGl0bGU+PHBhdGggZD0iTTUgMTdjMCAxLjEwOS45IDIgMiAyaDEwYzEuMTA5IDAgMi0uOSAyLTJzLS45LTItMi0ySDVjLTEuMSAwLTIgLjktMiAyeiBNNSA1YzAgMS4xMDkuOSAyIDIgMmgxMGMxLjEwOSAwIDItLjkgMi0ycy0uOS0yLTItMkg1Yy0xLjEgMC0yIC45LTIgMnogTTEgMTFoMjBWM2gtMjB2OG0wIDEyaDIwdjhoLTIwdi04Ii8+PC9zdmc+") no-repeat center center;
       background-size: contain;
     }
     .grid-icon {
       width: 20px;
       height: 20px;
-      background: url("data:image/svg+xml;charset=utf-8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9IiNmZmYiIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNNCA1djRoNHYtNEg0em0wIDVoNHYtNEg0djR6bTAgNWg0di00SDR2NHpNOSA1djRoNHYtNEg5em0wIDVoNHYtNEg5djR6bTAgNWg0di00SDl2NHptNSA2aDR2LTRoLTR2NHptMC01aDR2LTRoLTR2NHptMCAxMGg0di00aC00djR6Ii8+PC9zdmc+") no-repeat center center;
+      background: url("data:image/svg+xml;charset=utf-8;base64,PHN2ZyBmaWxsPSIjZmZmIiB2aWV3Qm94PSIwIDAgMjQgMjQiIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnL3N2ZyI+PHRpdGxlPmFwcHM8L3RpdGxlPjxwYXRoIGQ9Ik0zIDN2OGg4VjNIM3ogbTAgMTAwdjhIM3YtOG0xMC04djhoOHYtOGgtOHogMTAgMTBoOHYtOGgtOHoiLz48L3N2Zz4=") no-repeat center center;
       background-size: contain;
     }
 
@@ -461,9 +459,8 @@
       width: 220px; 
     }
 
-    /* We no longer color the entire .folder-item background 
-       We do alternate shading for row separation. 
-    */
+    /* For the folder items, let's do small squares for status, no entire-row color. 
+       Also do alternating shading for row separation. */
     .folder-item {
       position: relative;
       border-radius: 25px;
@@ -471,11 +468,11 @@
       margin: 5px 0;
       font-size: 0.9em;
       color: #fff;
+      border: 2px solid #fff;
       cursor: default;
-      border: 2px solid #fff; 
       transition: box-shadow 0.3s, transform 0.3s;
     }
-    /* Alternate row shading */
+    /* Alternating row shading */
     .folder-item:nth-child(even) {
       background: rgba(255,255,255,0.05);
     }
@@ -500,9 +497,7 @@
       opacity: 1;
     }
 
-    /* We'll use a small status-square for color coding 
-       Instead of coloring the entire row.
-    */
+    /* Small color-coded squares to represent status */
     .status-square {
       width: 14px;
       height: 14px;
@@ -518,9 +513,8 @@
     .status-square.in-progress { background: #8e44ad; }
     .status-square.pending { background: #f39c12; }
     .status-square.finished { background: #27ae60; }
-    /* If you have other statuses, add them similarly. */
-    
-    /* "list-header-row" for columns */
+
+    /* header row in list mode */
     .list-header-row {
       display: flex;
       font-weight: 600;
@@ -546,7 +540,6 @@
 </head>
 <body>
   <header>
-    <!-- Folder icon only -->
     <button class="folder-btn" id="folderBtn">
       <span class="folder-icon"></span>
     </button>
@@ -682,10 +675,9 @@
     </div>
   </div>
 
-  <!-- Folder Modal: Show Active/Archived, list/grid, with color-coded squares -->
+  <!-- Folder Modal: Show Active/Archived, List/Grid. -->
   <div id="folderModal" class="modal">
     <div class="modal-content">
-      <!-- Left side: Active/Archived -->
       <div class="folder-sidebar">
         <div class="folder-choice" id="folderActiveBtn">
           <div class="mini-folder-icon"></div>
@@ -696,7 +688,6 @@
           <span>Archived</span>
         </div>
       </div>
-      <!-- Right side: top row for list/grid, below is content -->
       <div class="folder-body">
         <div class="folder-view-buttons">
           <button class="view-btn" id="folderListBtn">
@@ -706,39 +697,36 @@
             <div class="grid-icon"></div>
           </button>
         </div>
-        <div id="folderContent" class="folder-content list-view">
-          <!-- We will fill items here, each row has a small color-coded status square, 
-               with alternating shading. -->
-        </div>
+        <div id="folderContent" class="folder-content list-view"></div>
       </div>
     </div>
   </div>
 
   <script>
-    /* 
-      Full JavaScript code: localStorage, archiving, 
-      folder modal with list/grid, 
-      color-coded squares, etc.
-    */
-
+    /************************************************************
+     *  Data Structures
+     ************************************************************/
     let jobs = [];
     let officeTasks = [];
     let jobIdCounter = 1;
     let officeTaskIdCounter = 101;
 
-    let folderViewMode = "list";   // "list" or "grid"
-    let folderFilter = "active";   // "active" or "archived"
+    let folderViewMode = "list";
+    let folderFilter = "active";
 
     let currentEditBoard = null;
     let currentEditId = null;
 
-    /* localStorage */
+    /************************************************************
+     *  Local Storage
+     ************************************************************/
     function saveToLocalStorage() {
       localStorage.setItem("myJobs", JSON.stringify(jobs));
       localStorage.setItem("myOfficeTasks", JSON.stringify(officeTasks));
       localStorage.setItem("myJobIdCounter", jobIdCounter.toString());
       localStorage.setItem("myOfficeTaskIdCounter", officeTaskIdCounter.toString());
     }
+
     function loadFromLocalStorage() {
       const storedJobs = localStorage.getItem("myJobs");
       const storedOffice = localStorage.getItem("myOfficeTasks");
@@ -750,7 +738,9 @@
       if (storedOCounter) officeTaskIdCounter = parseInt(storedOCounter, 10);
     }
 
-    /* time tracking */
+    /************************************************************
+     *  Time Tracking in Each Status
+     ************************************************************/
     function startNewTransition(item, newStatus) {
       const now = Date.now();
       if (!item.transitions) item.transitions = [];
@@ -764,6 +754,7 @@
         end: null
       });
     }
+
     function calculatePhaseTimes(item) {
       const result = {};
       if (!item.transitions) return result;
@@ -777,7 +768,9 @@
       return result;
     }
 
-    /* Render boards with active items only */
+    /************************************************************
+     *  Render Boards
+     ************************************************************/
     function renderJobs() {
       document.getElementById("jobs-submitted-col").innerHTML = "<h3>Submitted</h3>";
       document.getElementById("jobs-accepted-col").innerHTML = "<h3>Accepted</h3>";
@@ -798,11 +791,12 @@
         `;
         itemDiv.dataset.jobId = job.id;
         itemDiv.dataset.board = "jobs";
+
         itemDiv.addEventListener("dragstart", onDragStart);
         itemDiv.addEventListener("dragend", onDragEnd);
 
         const editBtn = itemDiv.querySelector(".edit-btn");
-        editBtn.addEventListener("click", e => {
+        editBtn.addEventListener("click", (e) => {
           e.stopPropagation();
           openEditModal("jobs", job.id);
         });
@@ -818,6 +812,7 @@
         }
       });
     }
+
     function renderOfficeTasks() {
       document.getElementById("office-notstarted-col").innerHTML = "<h3>Not Started</h3>";
       document.getElementById("office-inprogress-col").innerHTML = "<h3>In Progress</h3>";
@@ -837,11 +832,12 @@
         `;
         itemDiv.dataset.taskId = task.id;
         itemDiv.dataset.board = "office";
+
         itemDiv.addEventListener("dragstart", onDragStart);
         itemDiv.addEventListener("dragend", onDragEnd);
 
         const editBtn = itemDiv.querySelector(".edit-btn");
-        editBtn.addEventListener("click", e => {
+        editBtn.addEventListener("click", (e) => {
           e.stopPropagation();
           openEditModal("office", task.id);
         });
@@ -858,7 +854,131 @@
       });
     }
 
-    /* Edit & Archive logic */
+    /************************************************************
+     *  Add New Job / Office Task
+     ************************************************************/
+    // Show job modal
+    const openJobModalBtn = document.getElementById("openJobModalBtn");
+    const jobModal = document.getElementById("jobModal");
+    const closeJobModalBtn = document.getElementById("closeJobModalBtn");
+    const addJobBtn = document.getElementById("addJobBtn");
+
+    openJobModalBtn.addEventListener("click", () => {
+      jobModal.style.display = "flex";
+      openJobModalBtn.classList.add("btn-click-bounce");
+      setTimeout(() => openJobModalBtn.classList.remove("btn-click-bounce"), 400);
+    });
+    closeJobModalBtn.addEventListener("click", () => closeJobModal());
+    window.addEventListener("click", (e) => {
+      if (e.target === jobModal) closeJobModal();
+    });
+
+    function closeJobModal() {
+      jobModal.style.display = "none";
+      document.getElementById("jobContract").value = "";
+      document.getElementById("jobDueDate").value = "";
+      document.getElementById("jobAssigned").value = "";
+      document.getElementById("jobStatus").value = "Submitted";
+      document.getElementById("jobComment").value = "";
+    }
+
+    addJobBtn.addEventListener("click", () => {
+      addJobBtn.classList.add("btn-click-bounce");
+      setTimeout(() => addJobBtn.classList.remove("btn-click-bounce"), 400);
+
+      const contractName = document.getElementById("jobContract").value.trim();
+      const dueDate = document.getElementById("jobDueDate").value;
+      const assignedTo = document.getElementById("jobAssigned").value.trim();
+      const status = document.getElementById("jobStatus").value;
+      const comment = document.getElementById("jobComment").value.trim();
+
+      if (!contractName) {
+        alert("Please enter a Contract Name.");
+        return;
+      }
+
+      const now = Date.now();
+      const newJob = {
+        id: jobIdCounter++,
+        board: "jobs",
+        contractName,
+        createdAt: now,
+        assignedTo,
+        status,
+        comment,
+        dueDate,
+        transitions: [],
+        archived: false
+      };
+      startNewTransition(newJob, status);
+      jobs.push(newJob);
+
+      renderJobs();
+      saveToLocalStorage();
+      closeJobModal();
+    });
+
+    // Show office task modal
+    const openOfficeModalBtn = document.getElementById("openOfficeModalBtn");
+    const officeModal = document.getElementById("officeModal");
+    const closeOfficeModalBtn = document.getElementById("closeOfficeModalBtn");
+    const addOfficeTaskBtn = document.getElementById("addOfficeTaskBtn");
+
+    openOfficeModalBtn.addEventListener("click", () => {
+      officeModal.style.display = "flex";
+      openOfficeModalBtn.classList.add("btn-click-bounce");
+      setTimeout(() => openOfficeModalBtn.classList.remove("btn-click-bounce"), 400);
+    });
+    closeOfficeModalBtn.addEventListener("click", () => closeOfficeModal());
+    window.addEventListener("click", (e) => {
+      if (e.target === officeModal) closeOfficeModal();
+    });
+
+    function closeOfficeModal() {
+      officeModal.style.display = "none";
+      document.getElementById("taskTitle").value = "";
+      document.getElementById("taskAssigned").value = "";
+      document.getElementById("taskStatus").value = "Not Started";
+      document.getElementById("taskComment").value = "";
+    }
+
+    addOfficeTaskBtn.addEventListener("click", () => {
+      addOfficeTaskBtn.classList.add("btn-click-bounce");
+      setTimeout(() => addOfficeTaskBtn.classList.remove("btn-click-bounce"), 400);
+
+      const title = document.getElementById("taskTitle").value.trim();
+      const assignedTo = document.getElementById("taskAssigned").value.trim();
+      const status = document.getElementById("taskStatus").value;
+      const comment = document.getElementById("taskComment").value.trim();
+
+      if (!title) {
+        alert("Please enter a Task Title.");
+        return;
+      }
+
+      const now = Date.now();
+      const newTask = {
+        id: officeTaskIdCounter++,
+        board: "office",
+        title,
+        createdAt: now,
+        assignedTo,
+        status,
+        comment,
+        transitions: [],
+        archived: false
+      };
+      startNewTransition(newTask, status);
+      officeTasks.push(newTask);
+
+      renderOfficeTasks();
+      saveToLocalStorage();
+      closeOfficeModal();
+    });
+
+    /************************************************************
+     *  Edit & Archive
+     ************************************************************/
     const editModal = document.getElementById("editModal");
     const closeEditModalBtn = document.getElementById("closeEditModalBtn");
     const editFormContainer = document.getElementById("editFormContainer");
@@ -880,6 +1000,7 @@
 
       const createdTime = new Date(item.createdAt).toLocaleString();
       const phaseTimes = calculatePhaseTimes(item);
+
       let phaseTimeHtml = "";
       Object.keys(phaseTimes).forEach(st => {
         const ms = phaseTimes[st];
@@ -946,6 +1067,7 @@
 
       editFormContainer.innerHTML = formHTML;
     }
+
     function closeEditModal() {
       editModal.style.display = "none";
       editFormContainer.innerHTML = "";
@@ -953,11 +1075,13 @@
       currentEditId = null;
     }
     closeEditModalBtn.addEventListener("click", () => closeEditModal());
-    window.addEventListener("click", e => {
+    window.addEventListener("click", (e) => {
       if (e.target === editModal) {
         closeEditModal();
       }
     });
+
+    // Archive
     archiveBtn.addEventListener("click", () => {
       if (!currentEditBoard || !currentEditId) return;
       let item = null;
@@ -975,7 +1099,7 @@
       renderOfficeTasks();
     });
 
-    // Insert "Save Changes" button dynamically
+    // Insert "Save Changes" button if missing
     const observer = new MutationObserver(() => {
       if (!document.getElementById("saveEditBtn")) {
         const saveBtn = document.createElement("button");
@@ -1023,7 +1147,7 @@
     observer.observe(editFormContainer, { childList: true, subtree: true });
 
     /************************************************************
-     * DRAG & DROP
+     *  Drag & Drop
      ************************************************************/
     let draggedItem = null;
     function onDragStart(e) {
@@ -1057,13 +1181,13 @@
       if (!draggedItem) return;
       col.appendChild(draggedItem);
 
-      // bounce glow
       draggedItem.classList.remove("bounce-glow");
       void draggedItem.offsetWidth;
       draggedItem.classList.add("bounce-glow");
 
       const newStatus = col.getAttribute("data-status");
       const boardType = draggedItem.dataset.board;
+
       if (boardType === "jobs") {
         const jobId = parseInt(draggedItem.dataset.jobId, 10);
         const job = jobs.find(j => j.id === jobId);
@@ -1087,7 +1211,7 @@
     }
 
     /************************************************************
-     * CSV EXPORT
+     *  CSV Export
      ************************************************************/
     document.getElementById("downloadCsvBtn").addEventListener("click", () => {
       const rows = [];
@@ -1143,7 +1267,7 @@
     });
 
     /************************************************************
-     * 7) FOLDER MODAL: list/grid, active/archived, color-coded squares
+     *  FOLDER MODAL: Active/Archived, List/Grid
      ************************************************************/
     const folderBtn = document.getElementById("folderBtn");
     const folderModal = document.getElementById("folderModal");
@@ -1159,7 +1283,7 @@
       setTimeout(() => folderBtn.classList.remove("btn-click-bounce"), 400);
       renderFolderView();
     });
-    window.addEventListener("click", e => {
+    window.addEventListener("click", (e) => {
       if (e.target === folderModal) {
         folderModal.style.display = "none";
       }
@@ -1173,6 +1297,7 @@
       folderFilter = "archived";
       renderFolderView();
     });
+
     folderListBtn.addEventListener("click", () => {
       folderViewMode = "list";
       renderFolderView();
@@ -1183,7 +1308,6 @@
     });
 
     function renderFolderView() {
-      // Switch list or grid
       if (folderViewMode === "list") {
         folderContent.classList.remove("grid-view");
         folderContent.classList.add("list-view");
@@ -1193,7 +1317,7 @@
       }
       folderContent.innerHTML = "";
 
-      // If in list mode, add a header row
+      // In "list" mode, show a header row
       if (folderViewMode === "list") {
         const headerRow = document.createElement("div");
         headerRow.classList.add("list-header-row");
@@ -1202,7 +1326,7 @@
           <div data-col="name">Name</div>
           <div data-col="status">Status</div>
         `;
-        headerRow.addEventListener("click", e => {
+        headerRow.addEventListener("click", (e) => {
           const colName = e.target.getAttribute("data-col");
           if (colName) {
             toggleFilterPopup(colName, e.pageX, e.pageY);
@@ -1213,7 +1337,7 @@
 
       // Combine jobs + tasks
       const allItems = [];
-      jobs.forEach(j => {
+      jobs.forEach((j) => {
         allItems.push({
           board: "jobs",
           id: j.id,
@@ -1222,7 +1346,7 @@
           status: j.status
         });
       });
-      officeTasks.forEach(t => {
+      officeTasks.forEach((t) => {
         allItems.push({
           board: "office",
           id: t.id,
@@ -1233,51 +1357,44 @@
       });
 
       // Filter by active/archived
-      const filtered = allItems.filter(it => {
+      const filtered = allItems.filter((it) => {
         if (folderFilter === "active") return !it.archived;
         if (folderFilter === "archived") return it.archived;
         return true;
       });
 
-      filtered.forEach((it, idx) => {
-        // Each item is a row. We add a small color-coded square for the status
+      filtered.forEach((it) => {
         const row = document.createElement("div");
         row.classList.add("folder-item");
 
-        /* We'll have a .status-square plus the status name for visual. */
+        // small colored square for status
         const statusClass = it.status.toLowerCase().replace(" ", "-");
+        const squareHtml = `<div class="status-square ${statusClass}"></div>`;
 
-        // For list, we align columns. For grid, we just stack them.
         if (folderViewMode === "list") {
           row.style.display = "flex";
           row.style.flexDirection = "row";
-          /* Let's do 3 columns: board, name, status */
           row.innerHTML = `
-            <div style="flex:1; display:flex; align-items:center;">
-              [${it.board.toUpperCase()}]
-            </div>
+            <div style="flex:1;">[${it.board.toUpperCase()}]</div>
+            <div style="flex:2;">${it.name}</div>
             <div style="flex:2; display:flex; align-items:center;">
-              ${it.name}
-            </div>
-            <div style="flex:2; display:flex; align-items:center;">
-              <div class="status-square ${statusClass}"></div> 
+              ${squareHtml}
               ${it.status}
             </div>
             ${it.archived ? '<button class="restore-btn" title="Restore">↺</button>' : ''}
           `;
         } else {
-          // Grid view
+          // grid
           row.innerHTML = `
             <div>[${it.board.toUpperCase()}] ${it.name}</div>
             <div style="display:flex; align-items:center; margin-top:4px;">
-              <div class="status-square ${statusClass}"></div> 
+              ${squareHtml} 
               ${it.status}
             </div>
             ${it.archived ? '<button class="restore-btn" title="Restore">↺</button>' : ''}
           `;
         }
 
-        // If archived, show a restore button
         if (it.archived) {
           const restoreBtn = row.querySelector(".restore-btn");
           if (restoreBtn) {
@@ -1301,7 +1418,7 @@
       });
     }
 
-    /* Minimal filter popup logic (just a placeholder) */
+    // Minimal "filter popup" logic
     let filterPopup = null;
     function toggleFilterPopup(colName, x, y) {
       if (filterPopup && filterPopup.style.display !== "none") {
@@ -1321,19 +1438,19 @@
       filterPopup.style.top = y + "px";
       filterPopup.style.display = "block";
     }
-    window.addEventListener("click", e => {
+    window.addEventListener("click", (e) => {
       if (filterPopup && e.target !== filterPopup && !filterPopup.contains(e.target)) {
         filterPopup.style.display = "none";
       }
     });
 
     /************************************************************
-     * INIT
+     *  INIT
      ************************************************************/
     window.onload = function() {
-      // Set up drag-and-drop on columns
+      // Set up columns for drag & drop
       const allColumns = document.querySelectorAll(".column");
-      allColumns.forEach(col => {
+      allColumns.forEach((col) => {
         col.addEventListener("dragover", onDragOver);
         col.addEventListener("dragleave", onDragLeave);
         col.addEventListener("drop", onDrop);
@@ -1342,7 +1459,7 @@
       // Load from localStorage
       loadFromLocalStorage();
 
-      // If no data, create sample items
+      // If no data, sample items
       if (jobs.length===0 && officeTasks.length===0) {
         const now = Date.now();
         const sampleJob = {
@@ -1406,7 +1523,7 @@
         saveToLocalStorage();
       }
 
-      // Render main boards
+      // Render boards
       renderJobs();
       renderOfficeTasks();
     };
