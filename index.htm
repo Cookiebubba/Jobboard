@@ -1,0 +1,1415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Jobs & Office Tasks (Alternate Icons & Status Squares)</title>
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" />
+  <link 
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" 
+    rel="stylesheet"
+  />
+
+  <style>
+    /* Basic resets */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #000;
+      color: #fff;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /****************************************************************
+     * 1) Header
+     ****************************************************************/
+    header {
+      display: flex;
+      align-items: center;
+      padding: 20px;
+      background: #000;
+      border-bottom: 2px solid #fff; /* pure white line */
+      box-shadow: 0 0 8px rgba(255,255,255,0.1);
+      margin-bottom: 20px;
+    }
+
+    /* Folder icon only – no text */
+    .folder-btn {
+      padding: 8px 14px;
+      background: transparent;
+      border: 2px solid #fff;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: box-shadow 0.3s, transform 0.3s;
+      margin-right: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .folder-btn:hover {
+      box-shadow: 0 0 8px #fff;
+      transform: translateY(-2px);
+    }
+    .folder-icon {
+      /* Bigger folder icon */
+      width: 28px;
+      height: 24px;
+      background: url('data:image/svg+xml;charset=utf-8,<svg fill="%23fff" width="32" height="28" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 4l2 2h8c1.10457 0 2 .89543 2 2v10c0 1.10457-.89543 2-2 2H4c-1.10457 0-2-.89543-2-2V6c0-1.10457.89543-2 2-2h6z"/></svg>') no-repeat center center;
+      background-size: contain;
+    }
+
+    header h1 {
+      margin: 0;
+      font-weight: 600;
+      font-size: 1.8em;
+    }
+
+    .header-buttons {
+      display: flex;
+      gap: 10px;
+      margin-left: auto;
+    }
+    .header-btn {
+      padding: 8px 14px;
+      font-size: 0.9em;
+      font-weight: 500;
+      color: #fff;
+      background: transparent;
+      border: 2px solid #fff;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: box-shadow 0.3s, transform 0.3s;
+    }
+    .header-btn:hover {
+      box-shadow: 0 0 8px #fff;
+      transform: translateY(-2px);
+    }
+
+    /* Click bounce animation */
+    @keyframes clickBounce {
+      0%   { transform: scale(1); box-shadow: 0 0 8px #fff; }
+      50%  { transform: scale(1.08); box-shadow: 0 0 16px #fff; }
+      100% { transform: scale(1); box-shadow: 0 0 8px #0000; }
+    }
+    .btn-click-bounce {
+      animation: clickBounce 0.4s ease;
+    }
+
+    /****************************************************************
+     * 2) Container, Boards
+     ****************************************************************/
+    .container {
+      width: 95%;
+      margin: 0 auto 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+    .boards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      justify-content: space-around;
+    }
+    .board {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      flex: 1;
+      max-width: 1200px;
+    }
+    .board h2 {
+      font-weight: 600;
+      font-size: 1.4em;
+      margin-bottom: 8px;
+      text-align: center;
+      text-transform: uppercase;
+    }
+    .columns {
+      display: flex;
+      gap: 10px;
+      justify-content: space-around;
+    }
+    .column {
+      flex: 1;
+      min-width: 150px;
+      background: #000;
+      border: 2px solid #fff;
+      border-radius: 8px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: background 0.3s, box-shadow 0.3s;
+      box-shadow: 0 0 6px rgba(255,255,255,0.1);
+    }
+    .column h3 {
+      margin-bottom: 10px;
+      font-size: 1.1em;
+      font-weight: 600;
+      text-align: center;
+    }
+    .column.drag-over {
+      box-shadow: 0 0 12px #fff;
+    }
+
+    /****************************************************************
+     * 3) Items (Jobs/Tasks)
+     ****************************************************************/
+    .item {
+      position: relative;
+      cursor: move;
+      width: 90%;
+      border: none;
+      border-radius: 25px;
+      padding: 10px 15px;
+      margin: 5px 0;
+      font-size: 0.9em;
+      font-weight: 500;
+      color: #fff;
+      background: linear-gradient(45deg, #666, #999);
+      transition: box-shadow 0.3s, transform 0.3s;
+    }
+
+    /* Bounce glow on drag-drop */
+    @keyframes bounceGlow {
+      0%   { transform: scale(1); }
+      30%  { transform: scale(1.07); }
+      50%  { transform: scale(0.97); }
+      70%  { transform: scale(1.03); }
+      100% { transform: scale(1); }
+    }
+    .bounce-glow {
+      animation: bounceGlow 0.5s ease-out;
+    }
+
+    /* On the main board, tasks keep color-coded backgrounds if you want. 
+       (We could remove them entirely. 
+       For the folder "list" or "grid" we do small squares. 
+       So these .submitted, .accepted etc. are still used for board tasks. 
+    */
+    .submitted {
+      background: linear-gradient(45deg, #2980b9, #3498db);
+      box-shadow: 0 0 6px #3498db;
+    }
+    .submitted:hover {
+      box-shadow: 0 0 10px #3498db;
+    }
+    .accepted {
+      background: linear-gradient(45deg, #16a085, #1abc9c);
+      box-shadow: 0 0 6px #1abc9c;
+    }
+    .accepted:hover {
+      box-shadow: 0 0 10px #1abc9c;
+    }
+    .scheduled {
+      background: linear-gradient(45deg, #f39c12, #e67e22);
+      box-shadow: 0 0 6px #e67e22;
+    }
+    .scheduled:hover {
+      box-shadow: 0 0 10px #e67e22;
+    }
+    .complete {
+      background: linear-gradient(45deg, #27ae60, #2ecc71);
+      box-shadow: 0 0 6px #2ecc71;
+    }
+    .complete:hover {
+      box-shadow: 0 0 10px #2ecc71;
+    }
+    .not-started {
+      background: linear-gradient(45deg, #c0392b, #e74c3c);
+      box-shadow: 0 0 6px #e74c3c;
+    }
+    .not-started:hover {
+      box-shadow: 0 0 10px #e74c3c;
+    }
+    .in-progress {
+      background: linear-gradient(45deg, #9b59b6, #8e44ad);
+      box-shadow: 0 0 6px #8e44ad;
+    }
+    .in-progress:hover {
+      box-shadow: 0 0 10px #8e44ad;
+    }
+    .pending {
+      background: linear-gradient(45deg, #f1c40f, #f39c12);
+      box-shadow: 0 0 6px #f39c12;
+    }
+    .pending:hover {
+      box-shadow: 0 0 10px #f39c12;
+    }
+    .finished {
+      background: linear-gradient(45deg, #2ecc71, #27ae60);
+      box-shadow: 0 0 6px #27ae60;
+    }
+    .finished:hover {
+      box-shadow: 0 0 10px #27ae60;
+    }
+
+    .edit-btn {
+      position: absolute;
+      right: 10px;
+      top: 8px;
+      background: none;
+      border: none;
+      font-size: 0.9em;
+      cursor: pointer;
+      color: #fff;
+      opacity: 0.8;
+      transition: opacity 0.2s;
+    }
+    .edit-btn:hover {
+      opacity: 1;
+    }
+
+    /****************************************************************
+     * 4) Modals
+     ****************************************************************/
+    .modal {
+      display: none; 
+      position: fixed;
+      z-index: 9999;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0,0,0,0.7);
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn 0.3s;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+    .modal-content {
+      background: #000;
+      border: 2px solid #fff;
+      box-shadow: 0 0 12px rgba(255,255,255,0.2);
+      border-radius: 10px;
+      padding: 20px;
+      margin: 20px;
+      max-width: 500px;
+      width: 90%;
+      animation: scaleIn 0.3s;
+    }
+    @keyframes scaleIn {
+      from {transform: scale(0.8);}
+      to   {transform: scale(1);}
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .modal-header h2 {
+      margin: 0; font-size: 1.3em;
+    }
+    .close-modal {
+      background: none;
+      border: none;
+      font-size: 1.2em;
+      cursor: pointer;
+      color: #fff;
+      opacity: 0.8;
+    }
+    .close-modal:hover {
+      opacity: 1;
+    }
+    .form-row {
+      margin: 10px 0;
+      display: flex;
+      flex-direction: column;
+    }
+    .form-row label {
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+    .form-row input, .form-row select, .form-row textarea {
+      padding: 6px;
+      border-radius: 5px;
+      border: 2px solid #fff;
+      background: #111;
+      color: #fff;
+      font-size: 1em;
+      outline: none;
+    }
+    .modal-btn {
+      margin-top: 10px;
+      padding: 8px 12px;
+      background: #111;
+      border: 2px solid #fff;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: box-shadow 0.2s;
+      color: #fff;
+    }
+    .modal-btn:hover {
+      box-shadow: 0 0 6px #fff;
+    }
+    /* Archive button (red) in the edit modal */
+    .archive-btn {
+      background: linear-gradient(45deg, #e74c3c, #c0392b);
+      border-color: #fff;
+      margin-top: 15px;
+      border-radius: 25px;
+      width: 100%;
+    }
+    .archive-btn:hover {
+      box-shadow: 0 0 10px #e74c3c;
+    }
+
+    /****************************************************************
+     * 5) Folder Modal (Active/Archived) with list/grid
+     ****************************************************************/
+    #folderModal .modal-content {
+      max-width: 720px;
+      display: flex;
+      flex-direction: row;
+    }
+    .folder-sidebar {
+      width: 100px;
+      border-right: 2px solid #fff;
+      padding-right: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      align-items: center;
+    }
+    .folder-choice {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+      background: transparent;
+      border: 2px solid #fff;
+      border-radius: 20px;
+      padding: 6px 8px;
+      transition: box-shadow 0.2s, transform 0.2s;
+      font-size: 0.9em;
+    }
+    .folder-choice:hover {
+      box-shadow: 0 0 6px #fff;
+      transform: scale(1.03);
+    }
+    .mini-folder-icon {
+      width: 18px; 
+      height: 15px;
+      background: url('data:image/svg+xml;charset=utf-8,<svg fill="%23fff" width="24" height="20" viewBox="0 0 24 24"><path d="M10 4l2 2h8c1.10457 0 2 .89543 2 2v10c0 1.10457-.89543 2-2 2H4c-1.10457 0-2-.89543-2-2V6c0-1.10457.89543-2 2-2h6z"/></svg>') no-repeat center center;
+      background-size: contain;
+    }
+
+    .folder-body {
+      flex: 1;
+      padding-left: 10px;
+      display: flex;
+      flex-direction: column;
+    }
+    .folder-view-buttons {
+      align-self: flex-end;
+      margin-bottom: 10px;
+      display: flex;
+      gap: 10px;
+    }
+    .view-btn {
+      width: 32px;
+      height: 32px;
+      background: none;
+      border: 2px solid #fff;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: box-shadow 0.2s, transform 0.2s;
+      display: flex; 
+      align-items: center; 
+      justify-content: center;
+    }
+    .view-btn:hover {
+      box-shadow: 0 0 8px #fff;
+      transform: scale(1.05);
+    }
+
+    /* Different icons for list / grid */
+    .list-icon {
+      width: 20px;
+      height: 20px;
+      background: url("data:image/svg+xml;charset=utf-8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9IiNmZmYiIGhlaWdodD0iMjQiIHdpZHRoPSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMyAxM2gxNHYtMkgzdjJ6bTAgNmgxNHYtMkgzdjJ6bTAtMTBoMTRWN2gtM3YtMkgzIHYyeiIvPjwvc3ZnPg==") no-repeat center center;
+      background-size: contain;
+    }
+    .grid-icon {
+      width: 20px;
+      height: 20px;
+      background: url("data:image/svg+xml;charset=utf-8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9IiNmZmYiIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNNCA1djRoNHYtNEg0em0wIDVoNHYtNEg0djR6bTAgNWg0di00SDR2NHpNOSA1djRoNHYtNEg5em0wIDVoNHYtNEg5djR6bTAgNWg0di00SDl2NHptNSA2aDR2LTRoLTR2NHptMC01aDR2LTRoLTR2NHptMCAxMGg0di00aC00djR6Ii8+PC9zdmc+") no-repeat center center;
+      background-size: contain;
+    }
+
+    .folder-content.list-view .folder-item {
+      width: 100%;
+      margin-bottom: 5px;
+    }
+    .folder-content.grid-view {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .folder-content.grid-view .folder-item {
+      width: 220px; 
+    }
+
+    /* We no longer color the entire .folder-item background 
+       We do alternate shading for row separation. 
+    */
+    .folder-item {
+      position: relative;
+      border-radius: 25px;
+      padding: 10px 12px;
+      margin: 5px 0;
+      font-size: 0.9em;
+      color: #fff;
+      cursor: default;
+      border: 2px solid #fff; 
+      transition: box-shadow 0.3s, transform 0.3s;
+    }
+    /* Alternate row shading */
+    .folder-item:nth-child(even) {
+      background: rgba(255,255,255,0.05);
+    }
+    .folder-item:nth-child(odd) {
+      background: transparent;
+    }
+    .folder-item:hover {
+      transform: translateY(-2px);
+    }
+    .folder-item .restore-btn {
+      position: absolute;
+      top: 8px;
+      right: 10px;
+      border: none;
+      background: none;
+      color: #fff;
+      opacity: 0.8;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .folder-item .restore-btn:hover {
+      opacity: 1;
+    }
+
+    /* We'll use a small status-square for color coding 
+       Instead of coloring the entire row.
+    */
+    .status-square {
+      width: 14px;
+      height: 14px;
+      border-radius: 3px;
+      margin-right: 5px;
+      display: inline-block;
+    }
+    .status-square.submitted { background: #3498db; }
+    .status-square.accepted { background: #1abc9c; }
+    .status-square.scheduled { background: #e67e22; }
+    .status-square.complete { background: #2ecc71; }
+    .status-square.not-started { background: #e74c3c; }
+    .status-square.in-progress { background: #8e44ad; }
+    .status-square.pending { background: #f39c12; }
+    .status-square.finished { background: #27ae60; }
+    /* If you have other statuses, add them similarly. */
+    
+    /* "list-header-row" for columns */
+    .list-header-row {
+      display: flex;
+      font-weight: 600;
+      margin-bottom: 8px;
+      cursor: pointer;
+    }
+    .list-header-row > div {
+      flex: 1;
+      text-align: left;
+    }
+    .list-filter-popup {
+      position: absolute;
+      top: 25px;
+      left: 0;
+      background: #111;
+      border: 2px solid #fff;
+      padding: 5px;
+      border-radius: 5px;
+      display: none;
+      z-index: 999;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <!-- Folder icon only -->
+    <button class="folder-btn" id="folderBtn">
+      <span class="folder-icon"></span>
+    </button>
+
+    <h1>Jobs & Office Tasks</h1>
+
+    <div class="header-buttons">
+      <button class="header-btn" id="openJobModalBtn">Add Job</button>
+      <button class="header-btn" id="openOfficeModalBtn">Add Office Task</button>
+      <button class="header-btn" id="downloadCsvBtn">Download CSV</button>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="boards">
+      <!-- Jobs Board -->
+      <div class="board">
+        <h2>Jobs Board</h2>
+        <div class="columns">
+          <div class="column" id="jobs-submitted-col" data-board="jobs" data-status="Submitted">
+            <h3>Submitted</h3>
+          </div>
+          <div class="column" id="jobs-accepted-col" data-board="jobs" data-status="Accepted">
+            <h3>Accepted</h3>
+          </div>
+          <div class="column" id="jobs-scheduled-col" data-board="jobs" data-status="Scheduled">
+            <h3>Scheduled</h3>
+          </div>
+          <div class="column" id="jobs-complete-col" data-board="jobs" data-status="Complete">
+            <h3>Complete</h3>
+          </div>
+        </div>
+      </div>
+
+      <!-- Office Tasks Board -->
+      <div class="board">
+        <h2>Office Tasks Board</h2>
+        <div class="columns">
+          <div class="column" id="office-notstarted-col" data-board="office" data-status="Not Started">
+            <h3>Not Started</h3>
+          </div>
+          <div class="column" id="office-inprogress-col" data-board="office" data-status="In Progress">
+            <h3>In Progress</h3>
+          </div>
+          <div class="column" id="office-pending-col" data-board="office" data-status="Pending">
+            <h3>Pending</h3>
+          </div>
+          <div class="column" id="office-finished-col" data-board="office" data-status="Finished">
+            <h3>Finished</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Job Modal -->
+  <div id="jobModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Add New Job</h2>
+        <button class="close-modal" id="closeJobModalBtn">&times;</button>
+      </div>
+      <div class="form-row">
+        <label for="jobContract">Contract Name:</label>
+        <input type="text" id="jobContract" placeholder="e.g. Embassy Suites" />
+      </div>
+      <div class="form-row">
+        <label for="jobDueDate">Due Date (optional):</label>
+        <input type="date" id="jobDueDate" />
+      </div>
+      <div class="form-row">
+        <label for="jobAssigned">Assigned To:</label>
+        <input type="text" id="jobAssigned" placeholder="e.g. Sheldon" />
+      </div>
+      <div class="form-row">
+        <label for="jobStatus">Initial Status:</label>
+        <select id="jobStatus">
+          <option value="Submitted">Submitted</option>
+          <option value="Accepted">Accepted</option>
+          <option value="Scheduled">Scheduled</option>
+          <option value="Complete">Complete</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label for="jobComment">Comment (optional):</label>
+        <textarea id="jobComment" rows="2" placeholder="Additional notes..."></textarea>
+      </div>
+      <button class="modal-btn" id="addJobBtn">Add Job</button>
+    </div>
+  </div>
+
+  <!-- Add Office Task Modal -->
+  <div id="officeModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Add Office Task</h2>
+        <button class="close-modal" id="closeOfficeModalBtn">&times;</button>
+      </div>
+      <div class="form-row">
+        <label for="taskTitle">Title:</label>
+        <input type="text" id="taskTitle" placeholder="e.g. Invoice Paperwork" />
+      </div>
+      <div class="form-row">
+        <label for="taskAssigned">Assigned To:</label>
+        <input type="text" id="taskAssigned" placeholder="e.g. Terry" />
+      </div>
+      <div class="form-row">
+        <label for="taskStatus">Initial Status:</label>
+        <select id="taskStatus">
+          <option value="Not Started">Not Started</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Pending">Pending</option>
+          <option value="Finished">Finished</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label for="taskComment">Comment (optional):</label>
+        <textarea id="taskComment" rows="2" placeholder="Additional notes..."></textarea>
+      </div>
+      <button class="modal-btn" id="addOfficeTaskBtn">Add Task</button>
+    </div>
+  </div>
+
+  <!-- Edit Modal (for both Jobs & Office) -->
+  <div id="editModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Edit Item</h2>
+        <button class="close-modal" id="closeEditModalBtn">&times;</button>
+      </div>
+      <div id="editFormContainer"></div>
+      <button class="modal-btn archive-btn" id="archiveBtn">Archive</button>
+    </div>
+  </div>
+
+  <!-- Folder Modal: Show Active/Archived, list/grid, with color-coded squares -->
+  <div id="folderModal" class="modal">
+    <div class="modal-content">
+      <!-- Left side: Active/Archived -->
+      <div class="folder-sidebar">
+        <div class="folder-choice" id="folderActiveBtn">
+          <div class="mini-folder-icon"></div>
+          <span>Active</span>
+        </div>
+        <div class="folder-choice" id="folderArchivedBtn">
+          <div class="mini-folder-icon"></div>
+          <span>Archived</span>
+        </div>
+      </div>
+      <!-- Right side: top row for list/grid, below is content -->
+      <div class="folder-body">
+        <div class="folder-view-buttons">
+          <button class="view-btn" id="folderListBtn">
+            <div class="list-icon"></div>
+          </button>
+          <button class="view-btn" id="folderGridBtn">
+            <div class="grid-icon"></div>
+          </button>
+        </div>
+        <div id="folderContent" class="folder-content list-view">
+          <!-- We will fill items here, each row has a small color-coded status square, 
+               with alternating shading. -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* 
+      Full JavaScript code: localStorage, archiving, 
+      folder modal with list/grid, 
+      color-coded squares, etc.
+    */
+
+    let jobs = [];
+    let officeTasks = [];
+    let jobIdCounter = 1;
+    let officeTaskIdCounter = 101;
+
+    let folderViewMode = "list";   // "list" or "grid"
+    let folderFilter = "active";   // "active" or "archived"
+
+    let currentEditBoard = null;
+    let currentEditId = null;
+
+    /* localStorage */
+    function saveToLocalStorage() {
+      localStorage.setItem("myJobs", JSON.stringify(jobs));
+      localStorage.setItem("myOfficeTasks", JSON.stringify(officeTasks));
+      localStorage.setItem("myJobIdCounter", jobIdCounter.toString());
+      localStorage.setItem("myOfficeTaskIdCounter", officeTaskIdCounter.toString());
+    }
+    function loadFromLocalStorage() {
+      const storedJobs = localStorage.getItem("myJobs");
+      const storedOffice = localStorage.getItem("myOfficeTasks");
+      const storedJCounter = localStorage.getItem("myJobIdCounter");
+      const storedOCounter = localStorage.getItem("myOfficeTaskIdCounter");
+      if (storedJobs) jobs = JSON.parse(storedJobs);
+      if (storedOffice) officeTasks = JSON.parse(storedOffice);
+      if (storedJCounter) jobIdCounter = parseInt(storedJCounter, 10);
+      if (storedOCounter) officeTaskIdCounter = parseInt(storedOCounter, 10);
+    }
+
+    /* time tracking */
+    function startNewTransition(item, newStatus) {
+      const now = Date.now();
+      if (!item.transitions) item.transitions = [];
+      const last = item.transitions[item.transitions.length - 1];
+      if (last && last.end === null) {
+        last.end = now;
+      }
+      item.transitions.push({
+        status: newStatus,
+        start: now,
+        end: null
+      });
+    }
+    function calculatePhaseTimes(item) {
+      const result = {};
+      if (!item.transitions) return result;
+      item.transitions.forEach(tr => {
+        const phase = tr.status;
+        const endTime = tr.end || Date.now();
+        const duration = endTime - tr.start;
+        if (!result[phase]) result[phase] = 0;
+        result[phase] += duration;
+      });
+      return result;
+    }
+
+    /* Render boards with active items only */
+    function renderJobs() {
+      document.getElementById("jobs-submitted-col").innerHTML = "<h3>Submitted</h3>";
+      document.getElementById("jobs-accepted-col").innerHTML = "<h3>Accepted</h3>";
+      document.getElementById("jobs-scheduled-col").innerHTML = "<h3>Scheduled</h3>";
+      document.getElementById("jobs-complete-col").innerHTML = "<h3>Complete</h3>";
+
+      jobs.forEach(job => {
+        if (job.archived) return; // skip archived
+        const itemDiv = document.createElement("div");
+        itemDiv.classList.add("item", job.status.toLowerCase().replace(" ", "-"));
+        itemDiv.setAttribute("draggable", "true");
+
+        const displayName = job.contractName || "Untitled";
+        const displayDue = job.dueDate ? ` (Due: ${job.dueDate})` : "";
+        itemDiv.innerHTML = `
+          <span><strong>${displayName}</strong>${displayDue}</span>
+          <button class="edit-btn" title="Edit">✎</button>
+        `;
+        itemDiv.dataset.jobId = job.id;
+        itemDiv.dataset.board = "jobs";
+        itemDiv.addEventListener("dragstart", onDragStart);
+        itemDiv.addEventListener("dragend", onDragEnd);
+
+        const editBtn = itemDiv.querySelector(".edit-btn");
+        editBtn.addEventListener("click", e => {
+          e.stopPropagation();
+          openEditModal("jobs", job.id);
+        });
+
+        if (job.status === "Submitted") {
+          document.getElementById("jobs-submitted-col").appendChild(itemDiv);
+        } else if (job.status === "Accepted") {
+          document.getElementById("jobs-accepted-col").appendChild(itemDiv);
+        } else if (job.status === "Scheduled") {
+          document.getElementById("jobs-scheduled-col").appendChild(itemDiv);
+        } else if (job.status === "Complete") {
+          document.getElementById("jobs-complete-col").appendChild(itemDiv);
+        }
+      });
+    }
+    function renderOfficeTasks() {
+      document.getElementById("office-notstarted-col").innerHTML = "<h3>Not Started</h3>";
+      document.getElementById("office-inprogress-col").innerHTML = "<h3>In Progress</h3>";
+      document.getElementById("office-pending-col").innerHTML = "<h3>Pending</h3>";
+      document.getElementById("office-finished-col").innerHTML = "<h3>Finished</h3>";
+
+      officeTasks.forEach(task => {
+        if (task.archived) return;
+        const itemDiv = document.createElement("div");
+        itemDiv.classList.add("item", task.status.toLowerCase().replace(" ", "-"));
+        itemDiv.setAttribute("draggable", "true");
+
+        const displayTitle = task.title || "Untitled";
+        itemDiv.innerHTML = `
+          <span>${displayTitle}</span>
+          <button class="edit-btn" title="Edit">✎</button>
+        `;
+        itemDiv.dataset.taskId = task.id;
+        itemDiv.dataset.board = "office";
+        itemDiv.addEventListener("dragstart", onDragStart);
+        itemDiv.addEventListener("dragend", onDragEnd);
+
+        const editBtn = itemDiv.querySelector(".edit-btn");
+        editBtn.addEventListener("click", e => {
+          e.stopPropagation();
+          openEditModal("office", task.id);
+        });
+
+        if (task.status === "Not Started") {
+          document.getElementById("office-notstarted-col").appendChild(itemDiv);
+        } else if (task.status === "In Progress") {
+          document.getElementById("office-inprogress-col").appendChild(itemDiv);
+        } else if (task.status === "Pending") {
+          document.getElementById("office-pending-col").appendChild(itemDiv);
+        } else if (task.status === "Finished") {
+          document.getElementById("office-finished-col").appendChild(itemDiv);
+        }
+      });
+    }
+
+    /* Edit & Archive logic */
+    const editModal = document.getElementById("editModal");
+    const closeEditModalBtn = document.getElementById("closeEditModalBtn");
+    const editFormContainer = document.getElementById("editFormContainer");
+    const archiveBtn = document.getElementById("archiveBtn");
+
+    function openEditModal(boardType, itemId) {
+      editModal.style.display = "flex";
+      editFormContainer.innerHTML = "";
+      currentEditBoard = boardType;
+      currentEditId = itemId;
+
+      let item = null;
+      if (boardType === "jobs") {
+        item = jobs.find(j => j.id == itemId);
+      } else {
+        item = officeTasks.find(t => t.id == itemId);
+      }
+      if (!item) return;
+
+      const createdTime = new Date(item.createdAt).toLocaleString();
+      const phaseTimes = calculatePhaseTimes(item);
+      let phaseTimeHtml = "";
+      Object.keys(phaseTimes).forEach(st => {
+        const ms = phaseTimes[st];
+        const hours = (ms / 3600000).toFixed(2);
+        phaseTimeHtml += `<div><strong>${st}</strong>: ${hours} hrs</div>`;
+      });
+      if (!phaseTimeHtml) phaseTimeHtml = "<em>No transitions recorded yet.</em>";
+
+      const isJob = (boardType === "jobs");
+      const mainLabel = isJob ? "Contract Name" : "Title";
+      const mainValue = isJob ? (item.contractName || "") : (item.title || "");
+      const dueDateVal = isJob ? (item.dueDate || "") : "";
+
+      let formHTML = `
+        <div class="form-row">
+          <label>Created At:</label>
+          <div>${createdTime}</div>
+        </div>
+        <div class="form-row">
+          <label>${mainLabel}:</label>
+          <input type="text" id="editMainInput" value="${mainValue}" />
+        </div>
+      `;
+      if (isJob) {
+        formHTML += `
+          <div class="form-row">
+            <label>Due Date:</label>
+            <input type="date" id="editDueDate" value="${dueDateVal}" />
+          </div>
+        `;
+      }
+      formHTML += `
+        <div class="form-row">
+          <label>Assigned To:</label>
+          <input type="text" id="editAssignedInput" value="${item.assignedTo||""}" />
+        </div>
+        <div class="form-row">
+          <label>Current Status:</label>
+          <select id="editStatusSelect">
+      `;
+      if (isJob) {
+        ["Submitted","Accepted","Scheduled","Complete"].forEach(st => {
+          formHTML += `<option value="${st}" ${st===item.status?"selected":""}>${st}</option>`;
+        });
+      } else {
+        ["Not Started","In Progress","Pending","Finished"].forEach(st => {
+          formHTML += `<option value="${st}" ${st===item.status?"selected":""}>${st}</option>`;
+        });
+      }
+      formHTML += `
+          </select>
+        </div>
+        <div class="form-row">
+          <label>Comment:</label>
+          <textarea id="editCommentInput" rows="2">${item.comment||""}</textarea>
+        </div>
+        <div class="form-row">
+          <label>Time in Each Phase:</label>
+          <div style="padding-left:10px; font-size:0.9em;">
+            ${phaseTimeHtml}
+          </div>
+        </div>
+      `;
+
+      editFormContainer.innerHTML = formHTML;
+    }
+    function closeEditModal() {
+      editModal.style.display = "none";
+      editFormContainer.innerHTML = "";
+      currentEditBoard = null;
+      currentEditId = null;
+    }
+    closeEditModalBtn.addEventListener("click", () => closeEditModal());
+    window.addEventListener("click", e => {
+      if (e.target === editModal) {
+        closeEditModal();
+      }
+    });
+    archiveBtn.addEventListener("click", () => {
+      if (!currentEditBoard || !currentEditId) return;
+      let item = null;
+      if (currentEditBoard === "jobs") {
+        item = jobs.find(j => j.id == currentEditId);
+      } else {
+        item = officeTasks.find(t => t.id == currentEditId);
+      }
+      if (!item) return;
+
+      item.archived = true;
+      saveToLocalStorage();
+      closeEditModal();
+      renderJobs();
+      renderOfficeTasks();
+    });
+
+    // Insert "Save Changes" button dynamically
+    const observer = new MutationObserver(() => {
+      if (!document.getElementById("saveEditBtn")) {
+        const saveBtn = document.createElement("button");
+        saveBtn.classList.add("modal-btn");
+        saveBtn.id = "saveEditBtn";
+        saveBtn.textContent = "Save Changes";
+        archiveBtn.parentNode.insertBefore(saveBtn, archiveBtn);
+
+        saveBtn.addEventListener("click", () => {
+          if (!currentEditBoard || !currentEditId) return;
+          let item = null;
+          if (currentEditBoard === "jobs") {
+            item = jobs.find(j => j.id == currentEditId);
+          } else {
+            item = officeTasks.find(t => t.id == currentEditId);
+          }
+          if (!item) return;
+
+          const isJob = (currentEditBoard === "jobs");
+          const newMainValue = (document.getElementById("editMainInput")?.value || "").trim();
+          const newAssigned = (document.getElementById("editAssignedInput")?.value || "").trim();
+          const newComment = (document.getElementById("editCommentInput")?.value || "").trim();
+          const newStatus = document.getElementById("editStatusSelect")?.value;
+          
+          if (isJob) {
+            item.contractName = newMainValue;
+            item.dueDate = document.getElementById("editDueDate")?.value;
+          } else {
+            item.title = newMainValue;
+          }
+          item.assignedTo = newAssigned;
+          item.comment = newComment;
+          if (item.status !== newStatus) {
+            startNewTransition(item, newStatus);
+            item.status = newStatus;
+          }
+
+          saveToLocalStorage();
+          closeEditModal();
+          renderJobs();
+          renderOfficeTasks();
+        });
+      }
+    });
+    observer.observe(editFormContainer, { childList: true, subtree: true });
+
+    /************************************************************
+     * DRAG & DROP
+     ************************************************************/
+    let draggedItem = null;
+    function onDragStart(e) {
+      draggedItem = e.currentTarget;
+      e.dataTransfer.setData("text/plain", e.target.id);
+      draggedItem.style.opacity = "0.4";
+    }
+    function onDragEnd(e) {
+      if (draggedItem) {
+        draggedItem.style.opacity = "1";
+        draggedItem = null;
+      }
+    }
+    function onDragOver(e) {
+      e.preventDefault();
+      const col = e.currentTarget;
+      if (col.classList.contains("column")) {
+        col.classList.add("drag-over");
+      }
+    }
+    function onDragLeave(e) {
+      const col = e.currentTarget;
+      if (col.classList.contains("column")) {
+        col.classList.remove("drag-over");
+      }
+    }
+    function onDrop(e) {
+      e.preventDefault();
+      const col = e.currentTarget;
+      col.classList.remove("drag-over");
+      if (!draggedItem) return;
+      col.appendChild(draggedItem);
+
+      // bounce glow
+      draggedItem.classList.remove("bounce-glow");
+      void draggedItem.offsetWidth;
+      draggedItem.classList.add("bounce-glow");
+
+      const newStatus = col.getAttribute("data-status");
+      const boardType = draggedItem.dataset.board;
+      if (boardType === "jobs") {
+        const jobId = parseInt(draggedItem.dataset.jobId, 10);
+        const job = jobs.find(j => j.id === jobId);
+        if (job && job.status !== newStatus) {
+          startNewTransition(job, newStatus);
+          job.status = newStatus;
+        }
+        renderJobs();
+      } else {
+        const taskId = parseInt(draggedItem.dataset.taskId, 10);
+        const task = officeTasks.find(t => t.id === taskId);
+        if (task && task.status !== newStatus) {
+          startNewTransition(task, newStatus);
+          task.status = newStatus;
+        }
+        renderOfficeTasks();
+      }
+
+      saveToLocalStorage();
+      draggedItem = null;
+    }
+
+    /************************************************************
+     * CSV EXPORT
+     ************************************************************/
+    document.getElementById("downloadCsvBtn").addEventListener("click", () => {
+      const rows = [];
+      rows.push(["board","id","name","assignedTo","status","createdAt","dueDate","timeInPhases (hrs)","comment","archived"]);
+      jobs.forEach(j => {
+        const phaseTimes = calculatePhaseTimes(j);
+        let phaseStr = Object.entries(phaseTimes).map(([st,ms]) => {
+          return `${st}: ${(ms/3600000).toFixed(2)}`;
+        }).join("; ");
+        rows.push([
+          "jobs", j.id,
+          j.contractName||"",
+          j.assignedTo||"",
+          j.status,
+          new Date(j.createdAt).toLocaleString(),
+          j.dueDate||"",
+          phaseStr,
+          j.comment||"",
+          j.archived || false
+        ]);
+      });
+      officeTasks.forEach(t => {
+        const phaseTimes = calculatePhaseTimes(t);
+        let phaseStr = Object.entries(phaseTimes).map(([st,ms]) => {
+          return `${st}: ${(ms/3600000).toFixed(2)}`;
+        }).join("; ");
+        rows.push([
+          "office", t.id,
+          t.title||"",
+          t.assignedTo||"",
+          t.status,
+          new Date(t.createdAt).toLocaleString(),
+          "",
+          phaseStr,
+          t.comment||"",
+          t.archived || false
+        ]);
+      });
+
+      const csvContent = rows.map(r => r.map(cell => {
+        const safe = (cell||"").toString().replace(/"/g, '""');
+        return `"${safe}"`;
+      }).join(",")).join("\n");
+
+      const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "job_office_data.csv";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    });
+
+    /************************************************************
+     * 7) FOLDER MODAL: list/grid, active/archived, color-coded squares
+     ************************************************************/
+    const folderBtn = document.getElementById("folderBtn");
+    const folderModal = document.getElementById("folderModal");
+    const folderActiveBtn = document.getElementById("folderActiveBtn");
+    const folderArchivedBtn = document.getElementById("folderArchivedBtn");
+    const folderContent = document.getElementById("folderContent");
+    const folderListBtn = document.getElementById("folderListBtn");
+    const folderGridBtn = document.getElementById("folderGridBtn");
+
+    folderBtn.addEventListener("click", () => {
+      folderModal.style.display = "flex";
+      folderBtn.classList.add("btn-click-bounce");
+      setTimeout(() => folderBtn.classList.remove("btn-click-bounce"), 400);
+      renderFolderView();
+    });
+    window.addEventListener("click", e => {
+      if (e.target === folderModal) {
+        folderModal.style.display = "none";
+      }
+    });
+
+    folderActiveBtn.addEventListener("click", () => {
+      folderFilter = "active";
+      renderFolderView();
+    });
+    folderArchivedBtn.addEventListener("click", () => {
+      folderFilter = "archived";
+      renderFolderView();
+    });
+    folderListBtn.addEventListener("click", () => {
+      folderViewMode = "list";
+      renderFolderView();
+    });
+    folderGridBtn.addEventListener("click", () => {
+      folderViewMode = "grid";
+      renderFolderView();
+    });
+
+    function renderFolderView() {
+      // Switch list or grid
+      if (folderViewMode === "list") {
+        folderContent.classList.remove("grid-view");
+        folderContent.classList.add("list-view");
+      } else {
+        folderContent.classList.remove("list-view");
+        folderContent.classList.add("grid-view");
+      }
+      folderContent.innerHTML = "";
+
+      // If in list mode, add a header row
+      if (folderViewMode === "list") {
+        const headerRow = document.createElement("div");
+        headerRow.classList.add("list-header-row");
+        headerRow.innerHTML = `
+          <div data-col="board">Board</div>
+          <div data-col="name">Name</div>
+          <div data-col="status">Status</div>
+        `;
+        headerRow.addEventListener("click", e => {
+          const colName = e.target.getAttribute("data-col");
+          if (colName) {
+            toggleFilterPopup(colName, e.pageX, e.pageY);
+          }
+        });
+        folderContent.appendChild(headerRow);
+      }
+
+      // Combine jobs + tasks
+      const allItems = [];
+      jobs.forEach(j => {
+        allItems.push({
+          board: "jobs",
+          id: j.id,
+          name: j.contractName,
+          archived: j.archived,
+          status: j.status
+        });
+      });
+      officeTasks.forEach(t => {
+        allItems.push({
+          board: "office",
+          id: t.id,
+          name: t.title,
+          archived: t.archived,
+          status: t.status
+        });
+      });
+
+      // Filter by active/archived
+      const filtered = allItems.filter(it => {
+        if (folderFilter === "active") return !it.archived;
+        if (folderFilter === "archived") return it.archived;
+        return true;
+      });
+
+      filtered.forEach((it, idx) => {
+        // Each item is a row. We add a small color-coded square for the status
+        const row = document.createElement("div");
+        row.classList.add("folder-item");
+
+        /* We'll have a .status-square plus the status name for visual. */
+        const statusClass = it.status.toLowerCase().replace(" ", "-");
+
+        // For list, we align columns. For grid, we just stack them.
+        if (folderViewMode === "list") {
+          row.style.display = "flex";
+          row.style.flexDirection = "row";
+          /* Let's do 3 columns: board, name, status */
+          row.innerHTML = `
+            <div style="flex:1; display:flex; align-items:center;">
+              [${it.board.toUpperCase()}]
+            </div>
+            <div style="flex:2; display:flex; align-items:center;">
+              ${it.name}
+            </div>
+            <div style="flex:2; display:flex; align-items:center;">
+              <div class="status-square ${statusClass}"></div> 
+              ${it.status}
+            </div>
+            ${it.archived ? '<button class="restore-btn" title="Restore">↺</button>' : ''}
+          `;
+        } else {
+          // Grid view
+          row.innerHTML = `
+            <div>[${it.board.toUpperCase()}] ${it.name}</div>
+            <div style="display:flex; align-items:center; margin-top:4px;">
+              <div class="status-square ${statusClass}"></div> 
+              ${it.status}
+            </div>
+            ${it.archived ? '<button class="restore-btn" title="Restore">↺</button>' : ''}
+          `;
+        }
+
+        // If archived, show a restore button
+        if (it.archived) {
+          const restoreBtn = row.querySelector(".restore-btn");
+          if (restoreBtn) {
+            restoreBtn.addEventListener("click", () => {
+              if (it.board === "jobs") {
+                const job = jobs.find(j => j.id === it.id);
+                if (job) job.archived = false;
+              } else {
+                const task = officeTasks.find(t => t.id === it.id);
+                if (task) task.archived = false;
+              }
+              saveToLocalStorage();
+              renderJobs();
+              renderOfficeTasks();
+              renderFolderView();
+            });
+          }
+        }
+
+        folderContent.appendChild(row);
+      });
+    }
+
+    /* Minimal filter popup logic (just a placeholder) */
+    let filterPopup = null;
+    function toggleFilterPopup(colName, x, y) {
+      if (filterPopup && filterPopup.style.display !== "none") {
+        filterPopup.style.display = "none";
+        return;
+      }
+      if (!filterPopup) {
+        filterPopup = document.createElement("div");
+        filterPopup.classList.add("list-filter-popup");
+        filterPopup.innerHTML = `
+          <div>Filter by ${colName}</div>
+          <div style="font-size:0.8em; opacity:0.8;">(Not implemented)</div>
+        `;
+        document.body.appendChild(filterPopup);
+      }
+      filterPopup.style.left = x + "px";
+      filterPopup.style.top = y + "px";
+      filterPopup.style.display = "block";
+    }
+    window.addEventListener("click", e => {
+      if (filterPopup && e.target !== filterPopup && !filterPopup.contains(e.target)) {
+        filterPopup.style.display = "none";
+      }
+    });
+
+    /************************************************************
+     * INIT
+     ************************************************************/
+    window.onload = function() {
+      // Set up drag-and-drop on columns
+      const allColumns = document.querySelectorAll(".column");
+      allColumns.forEach(col => {
+        col.addEventListener("dragover", onDragOver);
+        col.addEventListener("dragleave", onDragLeave);
+        col.addEventListener("drop", onDrop);
+      });
+
+      // Load from localStorage
+      loadFromLocalStorage();
+
+      // If no data, create sample items
+      if (jobs.length===0 && officeTasks.length===0) {
+        const now = Date.now();
+        const sampleJob = {
+          id: 1,
+          board: "jobs",
+          contractName: "Embassy Suites",
+          createdAt: now,
+          assignedTo: "Sheldon",
+          status: "Submitted",
+          comment: "Waiting on acceptance",
+          dueDate: "2025-07-01",
+          transitions: [],
+          archived: false
+        };
+        startNewTransition(sampleJob, "Submitted");
+
+        const sampleJob2 = {
+          id: 2,
+          board: "jobs",
+          contractName: "Homeless Suites",
+          createdAt: now,
+          assignedTo: "Paul",
+          status: "Accepted",
+          comment: "",
+          dueDate: "",
+          transitions: [],
+          archived: false
+        };
+        startNewTransition(sampleJob2, "Accepted");
+        jobs = [sampleJob, sampleJob2];
+        jobIdCounter=3;
+
+        const sampleOffice1 = {
+          id: 101,
+          board: "office",
+          title: "Invoice Paperwork",
+          createdAt: now,
+          assignedTo: "Terry",
+          status: "Not Started",
+          comment: "",
+          transitions: [],
+          archived: false
+        };
+        startNewTransition(sampleOffice1, "Not Started");
+
+        const sampleOffice2 = {
+          id: 102,
+          board: "office",
+          title: "Schedule Team Meeting",
+          createdAt: now,
+          assignedTo: "Terry",
+          status: "In Progress",
+          comment: "",
+          transitions: [],
+          archived: false
+        };
+        startNewTransition(sampleOffice2, "In Progress");
+        officeTasks = [sampleOffice1, sampleOffice2];
+        officeTaskIdCounter=103;
+
+        saveToLocalStorage();
+      }
+
+      // Render main boards
+      renderJobs();
+      renderOfficeTasks();
+    };
+  </script>
+</body>
+</html>
